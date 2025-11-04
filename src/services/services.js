@@ -43,3 +43,7 @@ export function getAllResumes(payLoad) {
 export function getResumeById(id) {
   return client.get(`/Resume/get-one-record/${id}`);
 }
+
+export function createContact(payload) {
+  return client.post("/Contact/create", payload);
+}

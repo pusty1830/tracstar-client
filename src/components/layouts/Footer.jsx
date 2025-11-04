@@ -1,7 +1,7 @@
 // Footer.jsx
 import React from "react";
 import logo from "../../assets/tracstar.png"; // 👈 update the path to your actual logo file
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -51,12 +51,12 @@ const Footer = () => {
                 "AUTOMATION",
               ].map((t) => (
                 <li key={t}>
-                  <a
-                    href="#"
+                  <Link
+                    to="/coming-soon"
                     className="text-sm text-white hover:underline underline-offset-4"
                   >
                     {t}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -72,12 +72,12 @@ const Footer = () => {
                 "CAREER RESOURCES",
               ].map((t) => (
                 <li key={t}>
-                  <a
-                    href="#"
+                  <Link
+                    to="/coming-soon"
                     className="text-sm text-white hover:underline underline-offset-4"
                   >
                     {t}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -95,12 +95,12 @@ const Footer = () => {
                 "CONTACT US",
               ].map((t) => (
                 <li key={t}>
-                  <a
-                    href="#"
+                  <Link
+                    to="/about"
                     className="text-sm text-white hover:underline underline-offset-4"
                   >
                     {t}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -118,12 +118,12 @@ const Footer = () => {
                 "INVESTOR RELATIONS",
               ].map((t) => (
                 <li key={t}>
-                  <a
-                    href="#"
+                  <Link
+                    to="/about"
                     className="text-sm text-white hover:underline underline-offset-4"
                   >
                     {t}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

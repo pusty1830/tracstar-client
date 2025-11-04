@@ -1,6 +1,8 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { createContact } from "../services/services";
+import toast from "react-hot-toast";
 
 // ✅ Validation Schema
 const ContactSchema = Yup.object().shape({
@@ -21,8 +23,13 @@ const ContactSchema = Yup.object().shape({
 const ContactSection = () => {
   const handleSubmit = (values, { resetForm }) => {
     console.log("✅ Form Data:", values);
-    alert("Thanks for contacting us! We’ll get back to you soon.");
-    resetForm();
+    const payLoad = {
+      ...values,
+    };
+    createContact(payLoad).then((res) => {
+      toast(res?.data?.msg);
+      resetForm();
+    });
   };
 
   return (
@@ -66,20 +73,23 @@ const ContactSection = () => {
                 </h3>
                 <p className="text-slate-600 text-sm">
                   Tracstars Informatics <br />
-                  123 Business Street, Bhubaneswar, India
+                  GA-540, Sailashree Vihar, Chandrasekharpur, Bhubaneswar,
+                  India, 751021
                 </p>
               </div>
               <div className="rounded-2xl bg-white p-6 shadow-sm border border-slate-200">
                 <h3 className="text-xl font-semibold text-slate-900 mb-2">
                   📧 Email
                 </h3>
-                <p className="text-slate-600 text-sm">support@tracstars.com</p>
+                <p className="text-slate-600 text-sm">
+                  support@tracstarsinformatics.com/info@tracstarsinformatics.com
+                </p>
               </div>
               <div className="rounded-2xl bg-white p-6 shadow-sm border border-slate-200">
                 <h3 className="text-xl font-semibold text-slate-900 mb-2">
                   📞 Phone
                 </h3>
-                <p className="text-slate-600 text-sm">+91 98765 43210</p>
+                <p className="text-slate-600 text-sm">+91 9853759132</p>
               </div>
             </div>
 
