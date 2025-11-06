@@ -1,4 +1,3 @@
 const CYS = "kljhgcvklghcvbkjlgyfvcbnbjkuhgvjbnkjhgjbnmjjhbnmjhkn";
-export const R_KEY_ID = "rzp_test_R8rYvdREGvIeIP";
-export const R_KEY_SECRET = "aHQD31OgfWXjUq7eawQqSuVF";
+export const R_KEY_ID = "rzp_live_RcLy696tB6O1lb";
 export default CYS;

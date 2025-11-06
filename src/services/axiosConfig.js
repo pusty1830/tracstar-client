@@ -2,7 +2,6 @@ import axios from 'axios';
 import CryptoJS from 'crypto-js'
 import CYS from './Secret';
 import { logout } from './axiosClient';
-
 export function createAxiosClient({
     options,
     getCurrentAccessToken,

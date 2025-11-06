@@ -47,3 +47,13 @@ export function getResumeById(id) {
 export function createContact(payload) {
   return client.post("/Contact/create", payload);
 }
+
+export function getMyProfile(){
+  return client.get("/auth/profile");
+
+}
+export function updateProfile(payLoad){
+  return client.patch(`/auth/update-profile`,payLoad);
+
+}
+

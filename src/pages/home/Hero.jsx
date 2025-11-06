@@ -1,5 +1,5 @@
 import React from "react";
-import heroBg from "../../assets/hero3.jpg"; // 👈 your background image
+import heroBg from "../../assets/heroai.png"; // 👈 your background image
 
 const Hero = () => {
   return (

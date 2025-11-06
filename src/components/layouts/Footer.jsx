@@ -1,41 +1,96 @@
 // Footer.jsx
 import React from "react";
-import logo from "../../assets/tracstar.png"; // 👈 update the path to your actual logo file
+import logo from "../../assets/tracstar.png";
 import { Link } from "react-router-dom";
 
+/* ------------------------
+   ✅ Navigation Data
+------------------------- */
+const footerMenu = {
+  solutions: {
+    title: "Our Solutions",
+    buttonText: "OUR SOLUTIONS",
+    buttonLink: "/solutions",
+    desc: "Discover how Tracstar Informatics can help your business grow with innovative technology and strategic solutions.",
+  },
+
+  industries: {
+    title: "Industries We Serve",
+    buttonText: "OUR INDUSTRIES",
+    buttonLink: "/industries",
+    desc: "We work with multiple industries to deliver powerful and scalable digital solutions.",
+  },
+
+  servicesList: [
+    { label: "SOFTWARE DEVELOPMENT", link: "/software-development" },
+    { label: "IT CONSULTING", link: "/it-consulting" },
+    { label: "CLOUD SOLUTIONS", link: "/cloud-solutions" },
+    { label: "DATA ANALYTICS", link: "/data-analytics" },
+    { label: "AUTOMATION", link: "/automation" },
+  ],
+
+  professionals: [
+    { label: "FIND OPPORTUNITIES", link: "/coming-soon" },
+    { label: "WORKING WITH TRACSTARS", link: "/coming-soon" },
+    { label: "CAREER RESOURCES", link: "/coming-soon" },
+  ],
+
+  business: [
+    { label: "WHY TRACSTARS", link: "/why-us" },
+    { label: "HOW WE WORK", link: "/how-we-work" },
+    { label: "INDUSTRY SOLUTIONS", link: "/industries" },
+    { label: "TECH & INNOVATION", link: "/technology" },
+    { label: "CONTACT US", link: "/contact" },
+  ],
+
+  about: [
+    { label: "WHO WE ARE", link: "/about" },
+    { label: "OUR SERVICES", link: "/services" },
+    { label: "NEWS & INSIGHTS", link: "/resources" },
+    { label: "JOIN OUR TEAM", link: "/coming-soon" },
+    { label: "INVESTOR RELATIONS", link: "/coming-soon" },
+  ],
+
+  legal: [
+    { label: "Terms & Conditions", path: "/terms-and-conditions" },
+    { label: "Privacy Policy", path: "/privacy-policy" },
+    { label: "Shipping & Delivery Policy", path: "/shipping-policy" },
+    {
+      label: "Cancellation & Refund Policy",
+      path: "/cancellation-refund-policy",
+    },
+  ],
+};
+
+/* ------------------------
+   ✅ Footer Component
+------------------------- */
 const Footer = () => {
   return (
     <footer className="bg-[#041d29] text-white pt-12 pb-6">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-center md:text-left mb-8">
-          <div>
-            <h5 className="font-bold text-lg">Our Solutions</h5>
-            <p className="text-sm text-gray-400 mt-2 mb-4">
-              Discover how Tracstar Informatics can help your business grow with
-              innovative technology and strategic solutions.
-            </p>
-            <button className="inline-flex items-center border border-white/80 text-white text-sm px-4 py-2 rounded hover:bg-white/10 transition">
-              OUR SOLUTIONS
-            </button>
-          </div>
-          <div>
-            <h5 className="font-bold text-lg">Industries We Serve</h5>
-            <p className="text-sm text-gray-400 mt-2 mb-4">
-              We work with multiple industries to deliver powerful and scalable
-              digital solutions.
-            </p>
-            <button className="inline-flex items-center border border-white/80 text-white text-sm px-4 py-2 rounded hover:bg-white/10 transition">
-              OUR INDUSTRIES
-            </button>
-          </div>
+          {/* Solutions */}
+          {[footerMenu.solutions, footerMenu.industries].map((section, i) => (
+            <div key={i}>
+              <h5 className="font-bold text-lg">{section.title}</h5>
+              <p className="text-sm text-gray-400 mt-2 mb-4">{section.desc}</p>
+              <Link
+                to={section.buttonLink}
+                className="inline-flex items-center border border-white/80 text-white text-sm px-4 py-2 rounded hover:bg-white/10 transition"
+              >
+                {section.buttonText}
+              </Link>
+            </div>
+          ))}
         </div>
 
         <hr className="border-gray-700" />
 
-        {/* Middle Section */}
+        {/* Middle Nav */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-8">
-          {/* Logo and Services */}
+          {/* Logo + services */}
           <div>
             <img
               src={logo}
@@ -43,19 +98,13 @@ const Footer = () => {
               className="w-36 mb-4"
             />
             <ul className="mt-4 space-y-2">
-              {[
-                "SOFTWARE DEVELOPMENT",
-                "IT CONSULTING",
-                "CLOUD SOLUTIONS",
-                "DATA ANALYTICS",
-                "AUTOMATION",
-              ].map((t) => (
-                <li key={t}>
+              {footerMenu.servicesList.map((item) => (
+                <li key={item.label}>
                   <Link
-                    to="/coming-soon"
                     className="text-sm text-white hover:underline underline-offset-4"
+                    to={item.link}
                   >
-                    {t}
+                    {item.label}
                   </Link>
                 </li>
               ))}
@@ -63,71 +112,16 @@ const Footer = () => {
           </div>
 
           {/* Professionals */}
-          <div>
-            <h6 className="font-bold">For Professionals</h6>
-            <ul className="mt-3 space-y-2">
-              {[
-                "FIND OPPORTUNITIES",
-                "WORKING WITH TRACSTAR",
-                "CAREER RESOURCES",
-              ].map((t) => (
-                <li key={t}>
-                  <Link
-                    to="/coming-soon"
-                    className="text-sm text-white hover:underline underline-offset-4"
-                  >
-                    {t}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <FooterColumn
+            title="For Professionals"
+            items={footerMenu.professionals}
+          />
 
           {/* Business */}
-          <div>
-            <h6 className="font-bold">For Businesses</h6>
-            <ul className="mt-3 space-y-2">
-              {[
-                "WHY TRACSTAR",
-                "HOW WE WORK",
-                "INDUSTRY SOLUTIONS",
-                "TECH & INNOVATION",
-                "CONTACT US",
-              ].map((t) => (
-                <li key={t}>
-                  <Link
-                    to="/about"
-                    className="text-sm text-white hover:underline underline-offset-4"
-                  >
-                    {t}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <FooterColumn title="For Businesses" items={footerMenu.business} />
 
           {/* About */}
-          <div>
-            <h6 className="font-bold">About Tracstar</h6>
-            <ul className="mt-3 space-y-2">
-              {[
-                "WHO WE ARE",
-                "OUR SERVICES",
-                "NEWS & INSIGHTS",
-                "JOIN OUR TEAM",
-                "INVESTOR RELATIONS",
-              ].map((t) => (
-                <li key={t}>
-                  <Link
-                    to="/about"
-                    className="text-sm text-white hover:underline underline-offset-4"
-                  >
-                    {t}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <FooterColumn title="About Tracstar" items={footerMenu.about} />
         </div>
 
         <hr className="mt-8 border-gray-700" />
@@ -135,15 +129,7 @@ const Footer = () => {
         {/* Bottom Links */}
         <div className="text-center text-sm mt-4 text-gray-400">
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-3">
-            {[
-              { label: "Terms & Conditions", path: "/terms-and-conditions" },
-              { label: "Privacy Policy", path: "/privacy-policy" },
-              { label: "Shipping & Delivery Policy", path: "/shipping-policy" },
-              {
-                label: "Cancellation & Refund Policy",
-                path: "/cancellation-refund-policy",
-              },
-            ].map((item) => (
+            {footerMenu.legal.map((item) => (
               <Link
                 key={item.label}
                 to={item.path}
@@ -154,13 +140,15 @@ const Footer = () => {
             ))}
           </div>
 
-          {/* Bottom bar */}
+          {/* Credits */}
           <div className="mt-4 flex flex-col md:flex-row justify-center items-center gap-2 text-xs text-gray-400">
             <p>© Tracstar Informatics 2025</p>
             <span className="hidden md:inline-block mx-2">|</span>
             <p>
               Designed & Developed by{" "}
-              <span className="text-white font-medium">Amitav Pusty</span>
+              <span className="text-white font-medium">
+                Tracstars Informatics
+              </span>
             </p>
           </div>
         </div>
@@ -168,5 +156,26 @@ const Footer = () => {
     </footer>
   );
 };
+
+/* ------------------------
+   ✅ Reusable Column Component
+------------------------- */
+const FooterColumn = ({ title, items }) => (
+  <div>
+    <h6 className="font-bold">{title}</h6>
+    <ul className="mt-3 space-y-2">
+      {items.map((item) => (
+        <li key={item.label}>
+          <Link
+            to={item.link}
+            className="text-sm text-white hover:underline underline-offset-4"
+          >
+            {item.label}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
 
 export default Footer;

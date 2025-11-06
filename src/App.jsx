@@ -25,12 +25,25 @@ import ResumeSample from "./pages/ResumeSample";
 import GetAllResumes from "./pages/AllResume";
 import ResumePage from "./pages/ResumePage";
 import JsonToPdf from "./pages/ResumeSample";
-
+import ProfilePage from "./pages/ProfilePage";
+import SoftwareDevelopment from "./pages/footer/SoftwareDevlopemnt";
+import ITConsulting from "./pages/footer/ItCounsutingPage";
+import CloudSolutions from "./pages/footer/CloudSolution";
+import DataAnalytics from "./pages/footer/DataAnalytics";
+import Automation from "./pages/footer/Automation";
+import WhyTracstars from "./pages/footer/WhyTracstars";
+import HowWeWork from "./pages/footer/Howwework";
+import TechInnovation from "./pages/footer/TechInnovation";
+import IndustrySolutions from "./pages/footer/industrySolution";
+import ScrollToTop from "./components/ScrolltoTop";
+import Services from "./pages/footer/Services";
+import OurSolutions from "./pages/footer/OutSolution";
 
 function App() {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop />
         <Topbar />
         <Header />
         <Routes>
@@ -43,9 +56,10 @@ function App() {
           <Route path="/faq" element={<FAQSection />} />
           <Route path="/my-resume" element={<GetAllResumes />} />
           <Route path="/resume/:id" element={<ResumePage />} />
-          <Route path="/ex" element={<JsonToPdf/>}/>
+          <Route path="/ex" element={<JsonToPdf />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/coming-soon" element={<ComingSoon />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route
             path="/cancellation-refund-policy"
             element={<CancellationRefundPolicy />}
@@ -66,6 +80,22 @@ function App() {
             element={<AboutUs teamMembers={teamData} sections={sectionsData} />}
           />
           <Route path="/contact" element={<ContactUs />} />
+
+          {/* footer pages */}
+          <Route
+            path="/software-development"
+            element={<SoftwareDevelopment />}
+          />
+          <Route path="/it-consulting" element={<ITConsulting />} />
+          <Route path="/cloud-solutions" element={<CloudSolutions />} />
+          <Route path="/data-analytics" element={<DataAnalytics />} />
+          <Route path="/automation" element={<Automation />} />
+          <Route path="/why-us" element={<WhyTracstars />} />
+          <Route path="/how-we-work" element={<HowWeWork />} />
+          <Route path="/industries" element={<IndustrySolutions />} />
+          <Route path="/technology" element={<TechInnovation />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/solutions" element={<OurSolutions />} />
         </Routes>
         <Footer />
         <ToastContainer />

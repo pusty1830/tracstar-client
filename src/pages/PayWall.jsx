@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { R_KEY_ID } from "../services/Secret";
 import {
@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 
 const Paywall = () => {
   const navigate = useNavigate();
+  const [isPaying, setIsPaying] = useState(false);
 
   const loadScript = (src) => {
     return new Promise((resolve) => {
@@ -23,91 +24,74 @@ const Paywall = () => {
   };
 
   const displayRazorpay = async () => {
+    setIsPaying(true);
+
     const isLoaded = await loadScript(
       "https://checkout.razorpay.com/v1/checkout.js"
     );
     if (!isLoaded) {
       alert("Failed to load Razorpay SDK");
+      setIsPaying(false);
       return;
     }
 
     try {
-      // 1. Create order on backend (expect amount in rupees)
       const res = await createOrder({ amount: 51 });
       const order = res?.data?.data;
+
       if (!order || !order.id) {
-        console.error("Order creation failed or order missing:", res);
         alert("Unable to create payment order. Try again later.");
+        setIsPaying(false);
         return;
       }
 
-      console.log("🔹 Backend order:", order);
-
       const options = {
         key: R_KEY_ID,
-        amount: order.amount, // usually in paise (5100 for ₹51)
+        amount: order.amount,
         currency: order.currency || "INR",
         order_id: order.id,
-        name: "Access Fee",
+        name: "Tracstars Informatics Platform Fee",
         description: "Pay ₹51 to unlock this page",
         handler: async function (response) {
-          console.log("🔹 Razorpay raw response:", response);
-
           const verifyPayload = {
             orderId: response.razorpay_order_id,
             paymentId: response.razorpay_payment_id,
             signature: response.razorpay_signature,
-            amount: order.amount, // pass paise if backend expects paise
+            amount: order.amount,
           };
 
-          console.log("🔹 Payload to verify:", verifyPayload);
-
           try {
-            // Wait for backend verification
             const verifyRes = await verifyPayment(verifyPayload);
-            console.log("🔹 Verify response:", verifyRes);
-
-            // Adjust this check to whatever your backend returns
             const verified = Boolean(
               verifyRes?.data?.success || verifyRes?.status === 200
             );
 
             if (!verified) {
-              console.error("Payment verification failed:", verifyRes?.data);
-              toast.error(
-                "Payment verification failed. Please contact support."
-              );
+              toast.error("Payment verification failed.");
+              setIsPaying(false);
               return;
             }
 
-            // Create local payment record
             const createPaymentPayload = {
               userId: getUserId(),
               money: "51",
               status: "paid",
-              razorpay_payment_id: response.razorpay_payment_id, // optional extra
+              razorpay_payment_id: response.razorpay_payment_id,
             };
 
             const createRes = await createPayment(createPaymentPayload);
-            console.log("🔹 createPayment response:", createRes);
-
             const paymentId = createRes?.data?.data?.id;
+
             if (paymentId) {
-              toast.success("Your Payment Successfully Completed");
-              // redirect — use navigate if you prefer react-router
+              toast.success("Payment Successful!");
               window.location.href = `/resume-builder?paymentId=${paymentId}`;
             } else {
-              toast.error(
-                "Payment completed but server record missing. Contact support."
-              );
-              console.error(
-                "Missing payment ID in createPayment response:",
-                createRes
-              );
+              toast.error("Payment recorded but ID missing. Contact support.");
+              setIsPaying(false);
             }
           } catch (err) {
-            console.error("Verification/createPayment error:", err);
-            toast.error("Error verifying payment. Please try again.");
+            toast.error("Error verifying payment.");
+            setIsPaying(false);
           }
         },
         prefill: {
@@ -115,21 +99,19 @@ const Paywall = () => {
           email: "test@example.com",
           contact: "9999999999",
         },
-        theme: { color: "#f97316" },
+        theme: { color: "#001F3F" },
       };
 
       const rzp = new window.Razorpay(options);
-
-      // Handle explicit failure/cancel
-      rzp.on("payment.failed", function (response) {
-        console.error("Payment failed event:", response);
-        toast.error("Payment failed or was cancelled.");
+      rzp.on("payment.failed", () => {
+        toast.error("Payment failed or cancelled.");
+        setIsPaying(false);
       });
 
       rzp.open();
     } catch (err) {
-      console.error("Error creating order:", err);
       alert("Error creating order. Try again later.");
+      setIsPaying(false);
     }
   };
 
@@ -143,11 +125,18 @@ const Paywall = () => {
           You need to pay <span className="font-semibold">₹51</span> to access
           this page.
         </p>
+
         <button
           onClick={displayRazorpay}
-          className="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-3 rounded-lg shadow-md transition-all cursor-pointer"
+          disabled={isPaying}
+          className={`w-full text-white font-medium px-6 py-3 rounded-lg shadow-md transition-all 
+            ${
+              isPaying
+                ? "bg-[#001633] cursor-not-allowed" // darker navy when clicked
+                : "bg-[#001F3F] hover:bg-[#002b60] cursor-pointer"
+            }`}
         >
-          Pay ₹51 Now
+          {isPaying ? "Processing..." : "Pay ₹51 Now"}
         </button>
       </div>
     </div>
