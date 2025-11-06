@@ -82,7 +82,8 @@ const ContactSection = () => {
                   📧 Email
                 </h3>
                 <p className="text-slate-600 text-sm">
-                  support@tracstarsinformatics.com/info@tracstarsinformatics.com
+                  support@tracstarsinformatics.com <br />
+                  info@tracstarsinformatics.com
                 </p>
               </div>
               <div className="rounded-2xl bg-white p-6 shadow-sm border border-slate-200">
