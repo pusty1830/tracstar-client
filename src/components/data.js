@@ -2,7 +2,7 @@
 import aiimg1 from "../assets/aiimg1.webp";
 import aiimg2 from "../assets/aiimg2.webp";
 import aiimg3 from "../assets/aiimg3.jpg";
-import aiimg4 from "../assets/aiimg4.webp";
+import aiimg4 from "../assets/aiimg4.jpg";
 import logo from "../assets/airesumelogo1.png";
 
 const resourcesData = [
