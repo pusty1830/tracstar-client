@@ -163,6 +163,7 @@ const Navbar = () => {
             <li key={label}>
               <Link
                 to={href}
+                onClick={() => setMenuOpen(false)}
                 className="block rounded-md px-3 py-2 text-sm hover:bg-gray-100 transition"
               >
                 {label}
